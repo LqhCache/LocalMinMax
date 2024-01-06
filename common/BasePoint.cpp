@@ -4,7 +4,7 @@
 * @Description: 
 * @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
 */
-#include "LocalMinMax\Common\BasePoint.h"
+#include "common/BasePoint.h"
 
 namespace LocalMinMax::Common {
 

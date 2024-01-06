@@ -4,6 +4,8 @@
 * @Description: 
 * @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
 */
+#include <math.h>
+
 #ifndef LOCALMINMAX_COMMON_MATH_H
 #define LOCALMINMAX_COMMON_MATH_H
 
