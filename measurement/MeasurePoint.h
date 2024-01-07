@@ -4,10 +4,18 @@
 * @Description: 
 * @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
 */
-#include "LocalMinMax\Common\BasePoint.h"
+#include "common/BasePoint.h"
+#include "common/Math.h"
 
-using BasePoint = LocalMinMax::Common::BasePoint;
-class MeasurePoint : public BasePoint 
+#ifndef LOCALMINMAX_MEASUREMENT_MEASUREPOINT_H
+#define LOCALMINMAX_MEASUREMENT_MEASUREPOINT_H
+
+namespace localminmax::measurement {
+class MeasurePoint : public localminmax::common::BasePoint<int64_t>
 {
-
+    
 };
+
+} // localminmax::measurement
+
+#endif

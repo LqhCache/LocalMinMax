@@ -7,7 +7,9 @@
 #ifndef LOCALMINMAX_COMMON_BASEPOINT_H
 #define LOCALMINMAX_COMMON_BASEPOINT_H
 
-namespace LocalMinMax::Common {
+#include "common/Math.h"
+
+namespace localminmax::common {
 
 template<typename coordinate_type>
 class BasePoint {
@@ -30,11 +32,45 @@ public:
     {
         return m_y;
     }
+    bool operator<(const BasePoint& rhs) const 
+    {
+        if (doubleEqual(m_x, rhs.m_x)) {
+            return doubleLess(m_y, rhs.m_y);
+        }
+        return doubleLess(m_x, rhs.m_x);
+    }
+    bool operator==(const BasePoint& rhs) const 
+    {
+        return doubleEqual(m_x, rhs.m_x) && doubleEqual(m_y, rhs.m_y);
+    }
+    bool operator>(const BasePoint& rhs) const 
+    {
+        if (doubleEqual(m_x, rhs.m_x)) {
+            return doubleGreater(m_y, rhs.m_y);
+        }
+        return doubleGreater(m_x, rhs.m_x);
+    }
+    bool operator<=(const BasePoint& rhs) const 
+    {
+        return !(*this > rhs);
+    }
+    bool operator>=(const BasePoint& rhs) const 
+    {
+        return !(*this < rhs);
+    }
+    BasePoint operator-(const BasePoint& rhs) const 
+    {
+        return BasePoint(m_x - rhs.m_x, m_y - rhs.m_y);
+    }
+    BasePoint operator+(const BasePoint& rhs) const 
+    {
+        return BasePoint(m_x + rhs.m_x, m_y + rhs.m_y);
+    }
 
 private:
     coordinate_type m_x, m_y;
 };
 
-} // LocalMinMax::Common
+} // localminmax::common
 
 #endif
