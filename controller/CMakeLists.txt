@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(LocalMinMax)
 
-set(controller_src controller.cpp)
+set(controller_src Controller.cpp)
 
 add_library(localminmax_controller ${controller_src})
 

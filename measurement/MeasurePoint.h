@@ -11,9 +11,11 @@
 #define LOCALMINMAX_MEASUREMENT_MEASUREPOINT_H
 
 namespace localminmax::measurement {
-class MeasurePoint : public localminmax::common::BasePoint<int64_t>
-{
-    
+class MeasurePoint : public localminmax::common::BasePoint<int64_t> {
+public:
+    MeasurePoint() = default;
+private:
+    bool is_on_vertex;
 };
 
 } // localminmax::measurement
