@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(LocalMinMax)
 
-set(common_src GeometryAlgo.cpp)
+set(common_src GeometryAlgo.cpp 
+               Math.cpp)
 
 add_library(localminmax_common ${common_src})
 

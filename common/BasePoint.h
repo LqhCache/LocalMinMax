@@ -16,6 +16,7 @@ class BasePoint {
 public:
     BasePoint() = default;
     BasePoint(coordinate_type x, coordinate_type y) : m_x(x), m_y(y) {}
+    ~BasePoint() = default;
     void setX(coordinate_type x)
     {
         m_x = x;

@@ -27,42 +27,19 @@ constexpr int64_t c_bit6 = static_cast<int64_t>(1) << 5;
 constexpr int64_t c_bit7 = static_cast<int64_t>(1) << 6;
 constexpr int64_t c_bit8 = static_cast<int64_t>(1) << 7;
 
-bool doubleLess(double a, double b, double eps = default_eps) 
-{
-    return a - b < -eps;
-}
+bool doubleLess(double a, double b, double eps = default_eps);
 
-bool doubleLessEqual(double a, double b, double eps = default_eps)
-{
-    return a - b <= eps;
-}
+bool doubleLessEqual(double a, double b, double eps = default_eps);
 
-bool doubleEqual(double a, double b, double eps = default_eps) 
-{
-    return std::fabs(a - b) <= eps;
-}
+bool doubleEqual(double a, double b, double eps = default_eps);
 
-bool doubleGreater(double a, double b, double eps = default_eps)
-{
-    return a - b > eps;
-}
+bool doubleGreater(double a, double b, double eps = default_eps);
 
-bool doubleGreaterEqual(double a, double b, double eps = default_eps) 
-{
-    return a - b >= -eps;
-}
+bool doubleGreaterEqual(double a, double b, double eps = default_eps);
 
-bool oppositeSign(double a, double b, double eps = default_eps) 
-{
-    return (doubleLess(a, 0.0) && doubleGreater(b, 0.0)) || 
-           (doubleGreater(a, 0.0) && doubleLess(b, 0.0));
-}
+bool oppositeSign(double a, double b, double eps = default_eps);
 
-bool sameSign(double a, double b, double eps = default_eps) 
-{
-    return (doubleLess(a, 0.0) && doubleLess(b, 0.0)) || 
-           (doubleGreater(a, 0.0) && doubleGreater(b, 0.0));
-}
+bool sameSign(double a, double b, double eps = default_eps);
 
 template<typename T>
 T cross(T x1, T y1, T x2, T y2) 

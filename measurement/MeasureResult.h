@@ -16,11 +16,12 @@ namespace localminmax::measurement {
 class MeasureResult {
 public:
     MeasureResult() = default;
-    MeasureResult(const std::vector<std::shared_ptr<MeasureUnit>>& measure_result);
+    MeasureResult(const std::vector<std::shared_ptr<MeasureUnit>>& measure_units);
     ~MeasureResult() = default;
+    void appendMeasureUnit(const std::shared_ptr<MeasureUnit>& measure_unit);
     const std::vector<std::shared_ptr<MeasureUnit>>& getMeasureResult() const;
 private:
-    std::vector<std::shared_ptr<MeasureUnit>> m_measure_result = {};
+    std::vector<std::shared_ptr<MeasureUnit>> m_measure_units = {};
 };
 
 } // localminmax::measurement

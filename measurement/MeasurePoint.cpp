@@ -12,9 +12,19 @@ void MeasurePoint::setIsPrimary(bool is_primary)
     m_is_primary = is_primary;
 }
 
+void MeasurePoint::setIsDt(bool is_dt) 
+{
+    m_is_dt = is_dt;
+}
+
 bool MeasurePoint::isPrimary() const
 {
     return m_is_primary;
+}
+
+bool MeasurePoint::isDt() const
+{
+    return m_is_dt;
 }
 
 } // localminmax::measurement

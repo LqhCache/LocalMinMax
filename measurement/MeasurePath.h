@@ -15,11 +15,20 @@ namespace localminmax::measurement {
 class MeasurePath {
 public:
     MeasurePath() = default;
-    MeasurePath(const std::shared_ptr<std::list<MeasurePoint>>& measure_path);
+    MeasurePath(const std::shared_ptr<std::list<MeasurePoint>>& measure_points);
     ~MeasurePath() = default;
+
+    void setIsPrimary(bool is_primary);
+    void setIsDt(bool is_dt);
+
+    bool isPrimary() const;
+    bool isDt() const;
     bool isMeasurePathEnd(const MeasurePointIter& iter) const;
+
 private:
-    std::shared_ptr<std::list<MeasurePoint>> m_measure_path = nullptr;
+    bool m_is_dt;
+    bool m_is_primary;
+    std::shared_ptr<std::list<MeasurePoint>> m_measure_points = nullptr;
 };
 
 } // localminmax::measurement

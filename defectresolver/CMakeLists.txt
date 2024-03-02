@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(LocalMinMax)
 
-set(defectresolver_src DistDefectResolver.cpp)
+set(defectresolver_src DefectResolver.cpp)
 
 add_library(localminmax_defectresolver ${defectresolver_src})
 

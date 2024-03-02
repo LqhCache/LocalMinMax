@@ -32,6 +32,16 @@ void MeasureParam::setSameDirection(bool is_same_direction)
     m_is_same_direction = is_same_direction;
 }
 
+void MeasureParam::setMeasureType(const MeasureType& measure_type)
+{
+    m_measure_type = measure_type;
+}
+
+void MeasureParam::setMeasureVector(const DoublePoint& measure_vector)
+{
+    m_measure_vector = measure_vector;
+}
+
 double MeasureParam::getNeighborCheckDistance() const
 {
     return m_neighbor_check_distance;
@@ -55,6 +65,16 @@ int64_t MeasureParam::getAngleCheckTolerance() const
 bool MeasureParam::isSameDirection() const
 {
     return m_is_same_direction;
+}
+
+MeasureType MeasureParam::getMeasureType() const
+{
+    return m_measure_type;
+}
+
+const DoublePoint& MeasureParam::getMeasureVector() const
+{
+    return m_measure_vector;
 }
 
 } // localminmax::measurement

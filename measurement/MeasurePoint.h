@@ -21,12 +21,17 @@ enum class MeasurePointFlags {
     FLAT
 };
 
-class MeasurePoint : public localminmax::common::BasePoint<int64_t> {
+class MeasurePoint : public common::BasePoint<int64_t> {
 public:
     MeasurePoint() = default;
     ~MeasurePoint() = default;
+
     void setIsPrimary(bool is_primary);
+    void setIsDt(bool is_dt);
+
     bool isPrimary() const;
+    bool isDt() const;
+
 private:
     bool m_is_dt;
     bool m_is_primary;
