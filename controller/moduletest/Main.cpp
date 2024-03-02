@@ -1,3 +1,9 @@
+/*
+* @Author: Qianhua Liu
+* @Date: 2024-01-12
+* @Description: 
+* @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
+*/
 #include <mysql/mysql.h>
 #include <iostream>
 #include <string>

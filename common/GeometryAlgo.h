@@ -4,6 +4,8 @@
 * @Description: 
 * @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
 */
+#ifndef LOCALMINMAX_COMMON_GEOMETRYALGO_H
+#define LOCALMINMAX_COMMON_GEOMETRYALGO_H
 
 #include <iostream>
 
@@ -23,9 +25,14 @@ enum class PointLineRelationship {
     ON_SEGMENT = c_bit4 | ON_LINE,
     ON_ENDPOINT = c_bit5 | ON_SEGMENT
 };
+enum class DistanceType {
+    MANHATTAN,
+    EUCLIDEAN,
+    EUCLIDEAN_SQUARE
+};
 
 template<typename Point>
-PointLineRelationship getPointLineRelationship(Point p, Point q_start, Point q_end) 
+PointLineRelationship getPointLineRelationship(const Point& p, const Point& q_start, const Point& q_end) 
 {
     if (p == q_start || p == q_end) {
         return PointLineRelationship::ON_ENDPOINT;
@@ -46,9 +53,9 @@ PointLineRelationship getPointLineRelationship(Point p, Point q_start, Point q_e
 }
 
 template<typename Point>
-IntersectionType getIntersectionType(Point p1, Point p2, Point q1, Point q2)
+IntersectionType getIntersectionType(const Point& p1, const Point& p2, const Point& q1, const Point& q2)
 {
-    auto on_segment = [](Point p, Point _q1, Point _q2) {
+    auto on_segment = [](const Point& p, const Point& _q1, const Point& _q2) {
         return static_cast<int32_t>(PointLineRelationship::ON_SEGMENT) &
                static_cast<int32_t>(getPointLineRelationship(p, _q1, _q2));
     };
@@ -67,4 +74,24 @@ IntersectionType getIntersectionType(Point p1, Point p2, Point q1, Point q2)
     return IntersectionType::NO_INTERSECTION;
 }
 
+template<typename Point1, typename Point2>
+double point2PointDistance(const Point1& p1, const Point2& p2, DistanceType distance_type = DistanceType::EUCLIDEAN)
+{
+    switch(distance_type) {
+    case DistanceType::EUCLIDEAN: {
+        return std::sqrt(dot(p1 - p2, p1 - p2));
+    }
+    case DistanceType::EUCLIDEAN_SQUARE: {
+        return dot(p1 - p2, p1 - p2);
+    }
+    case DistanceType::MANHATTAN: {
+        return std::fabs(p1.x() - p2.x()) + std::fabs(p1.y() - p2.y());
+    }
+    default: 
+        return 0;
+    }
+}
+
 } // localminmax::common
+
+#endif // LOCALMINMAX_COMMON_GEOMETRYALGO_H

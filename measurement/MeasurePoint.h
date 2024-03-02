@@ -4,20 +4,37 @@
 * @Description: 
 * @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
 */
-#include "common/BasePoint.h"
-#include "common/Math.h"
-
 #ifndef LOCALMINMAX_MEASUREMENT_MEASUREPOINT_H
 #define LOCALMINMAX_MEASUREMENT_MEASUREPOINT_H
 
+#include <list>
+#include <memory>
+
+#include "common/BasePoint.h"
+#include "common/Math.h"
+
 namespace localminmax::measurement {
+
+enum class MeasurePointFlags {
+    MIN,
+    MAX,
+    FLAT
+};
+
 class MeasurePoint : public localminmax::common::BasePoint<int64_t> {
 public:
     MeasurePoint() = default;
+    ~MeasurePoint() = default;
+    void setIsPrimary(bool is_primary);
+    bool isPrimary() const;
 private:
-    bool is_on_vertex;
+    bool m_is_dt;
+    bool m_is_primary;
+    bool m_is_external;
 };
+
+using MeasurePointIter = std::list<MeasurePoint>::iterator;
 
 } // localminmax::measurement
 
-#endif
+#endif // LOCALMINMAX_MEASUREMENT_MEASUREPOINT_H

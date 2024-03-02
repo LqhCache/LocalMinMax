@@ -68,9 +68,10 @@ public:
     }
 
 private:
-    coordinate_type m_x, m_y;
+    coordinate_type m_x;
+    coordinate_type m_y;
 };
 
 } // localminmax::common
 
-#endif
+#endif // LOCALMINMAX_COMMON_BASEPOINT_H

@@ -4,10 +4,10 @@
 * @Description: 
 * @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
 */
-#include <math.h>
-
 #ifndef LOCALMINMAX_COMMON_MATH_H
 #define LOCALMINMAX_COMMON_MATH_H
+
+#include <math.h>
 
 namespace localminmax::common {
 using int16_t = short int;
@@ -76,18 +76,18 @@ T dot(T x1, T y1, T x2, T y2)
     return x1 * x2 + y1 * y2;
 }
 
-template<typename Point>
-double cross(Point p1, Point p2) 
+template<typename Point1, typename Point2>
+double cross(const Point1& p1, const Point2& p2) 
 {
     return cross<double>(p1.x(), p1.y(), p2.x(), p2.y());
 }
 
-template<typename Point>
-double dot(Point p1, Point p2)
+template<typename Point1, typename Point2>
+double dot(const Point1& p1, const Point2& p2)
 {
     return dot<double>(p1.x(), p1.y(), p2.x(), p2.y());
 }
 
 } // localminmax::common
 
-#endif
+#endif // LOCALMINMAX_COMMON_MATH_H
