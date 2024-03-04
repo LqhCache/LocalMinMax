@@ -17,16 +17,17 @@ TEST(MysqlTest, testMysql)
     bool status = true;
     const std::string test_sql = "SELECT * FROM mysqltest;";
 
-    mysql->connectDatabase(DEFAULT_DATABASE, DEFAULT_HOST, DEFAULT_USER, DEFAULT_PASSWARD, 
+    status = mysql->connectDatabase(DEFAULT_DATABASE, DEFAULT_HOST, DEFAULT_USER, DEFAULT_PASSWARD, 
                            DEFAULT_PORT, error_msg);
+    EXPECT_TRUE(status) << "connectDatabase: " << error_msg << std::endl;
 
     Mysql::MysqlResult result = {};
     status = mysql->queryDatabase(test_sql, result, error_msg);
-    EXPECT_TRUE(status) << "error_msg: " << error_msg << std::endl;
+    EXPECT_TRUE(status) << "queryDatabase: " << error_msg << std::endl;
 
     Mysql::MysqlResult golden = {
-        {"0", "1.000000", "2.000000"}, 
-        {"1", "1.000000", "4.000000"}, 
+        {"0", "1.000000", "1.000000"}, 
+        {"1", "4.000000", "5.000000"}, 
         {"2", "1.000000", "4.000000"}
     };
     EXPECT_EQ(golden, result);

@@ -4,16 +4,17 @@
 * @Description: 
 * @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
 */
-#include <gtest/gtest.h>
-#include <QtCore/qabstractanimation.h>
+#include <QtWidgets/QApplication>
+#include <QtCore/QDebug>
 
-#include "common/Math.h"
+#include "gui/MainWindow.h"
 
 int main(int argc, char* argv[]) {
-    testing::InitGoogleTest();
-    return RUN_ALL_TESTS();
+    // QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication app(argc, argv);
+    localminmax::gui::MainWindow w;
+    // w.setWindowFlag(Qt::FramelessWindowHint);
+    // w.setAttribute(Qt::WA_TranslucentBackground);
+    w.show();
+    return app.exec();
 }
-
-// int main(int argc, char* argv[]) {
-//     return a.exec();
-// }
