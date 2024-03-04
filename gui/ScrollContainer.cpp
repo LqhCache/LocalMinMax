@@ -5,7 +5,7 @@
 * @Note: Copyright (c) 2024, Qianhua Liu Inc., All rights reserved
 */
 
-#include "gui/Canvas.h"
+#include "gui/ScrollContainer.h"
 
 namespace localminmax::gui {
 
