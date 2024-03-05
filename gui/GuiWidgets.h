@@ -65,6 +65,36 @@ private:
     QColor m_background_color;
 };
 
+class GuiSelectionItem : public QWidget {
+    Q_OBJECT
+signals:
+    void selected(GuiSelectionItem* item);
+    // void heightChange();
+private:
+    QLabel* m_title;
+    QLabel* m_description;
+    QWidget* m_indicator;
+    QWidget* m_mainContent;
+    QWidget* m_bg_widget;
+    QGraphicsOpacityEffect* m_opac;
+    bool m_on_selected = false;
+    bool m_mouse_pressed = false;
+
+    void enterEvent(QEnterEvent* event);
+    void leaveEvent(QEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
+    void resizeEvent(QResizeEvent* event);
+
+public:
+    GuiSelectionItem(QString name, QString info = "", QWidget *parent = nullptr);
+    void select();
+    void deselect();
+    void setTitle(QString title_text);
+    void setDescription(QString desc_text);
+
+};
+
 } // localminmax::gui
 
 #endif // LOCALMINMAX_GUI_GUIWIDGETS_H
