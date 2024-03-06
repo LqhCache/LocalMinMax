@@ -8,6 +8,14 @@
 #include "gui/View.h"
 
 namespace localminmax::gui {
+ViewLog::ViewLog(const QString& log, const QWidget* parent)
+{
 
+}
+
+void ViewLog::resizeEvent(QResizeEvent* event)
+{
+
+}
 
 } // localminmax::gui

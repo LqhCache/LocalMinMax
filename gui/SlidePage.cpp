@@ -56,7 +56,6 @@ void SlidePage::slideIn()
     m_slide_layer->setEnabled(true);
     this->raise();
     m_slide_layer->show();
-    QParallelAnimationGroup* in_group = new QParallelAnimationGroup(this);
     QPropertyAnimation* slide_in_ani = new QPropertyAnimation(this, "pos", this);
     slide_in_ani->setStartValue(this->pos());
     slide_in_ani->setEndValue(QPoint(0, 0));
@@ -70,10 +69,17 @@ void SlidePage::slideIn()
     fade_in_ani->setDuration(750);
     QSequentialAnimationGroup *rotate = new QSequentialAnimationGroup(this);
     rotate->addPause(250);
+    QPropertyAnimation* rotate_ani = new QPropertyAnimation(m_background_icon, "rotationAngle", this);
+    rotate_ani->setStartValue(180.0);
+    rotate_ani->setEndValue(360.0);
+    rotate_ani->setDuration(750);
+    rotate_ani->setEasingCurve(QEasingCurve::InOutExpo);
+    QParallelAnimationGroup* in_group = new QParallelAnimationGroup(this);
     in_group->addAnimation(slide_in_ani);
     in_group->addAnimation(fade_in_ani);
+    in_group->addAnimation(rotate_ani);
     in_group->addAnimation(rotate);
-    connect(in_group, &QParallelAnimationGroup::finished, this, [=](){
+    connect(in_group, &QParallelAnimationGroup::finished, this, [=]() {
         this->m_cur_ani = nullptr;
     });
     in_group->start();
@@ -89,7 +95,6 @@ void SlidePage::slideOut()
     }
     m_on_shown = false;
     m_slide_layer->setEnabled(false);
-    QParallelAnimationGroup* out_group = new QParallelAnimationGroup(this);
     QPropertyAnimation* slide_out_ani = new QPropertyAnimation(this, "pos", this);
     slide_out_ani->setStartValue(this->pos());
     slide_out_ani->setEndValue(QPoint(-this->width() - 30, 0));
@@ -97,10 +102,17 @@ void SlidePage::slideOut()
     slide_out_ani->setEasingCurve(QEasingCurve::InOutExpo);
     QPropertyAnimation* fade_out_ani = new QPropertyAnimation(m_opacity, "opacity", this);
     fade_out_ani->setStartValue(m_opacity->opacity());
-    fade_out_ani->setEndValue(0);
+    fade_out_ani->setEndValue(0.0);
     fade_out_ani->setDuration(750);
+    QPropertyAnimation* rotate_ani = new QPropertyAnimation(m_background_icon, "rotationAngle", this);
+    rotate_ani->setStartValue(360.0);
+    rotate_ani->setEndValue(180.0);
+    rotate_ani->setDuration(750);
+    rotate_ani->setEasingCurve(QEasingCurve::InOutExpo);
+    QParallelAnimationGroup* out_group = new QParallelAnimationGroup(this);
     out_group->addAnimation(slide_out_ani);
     out_group->addAnimation(fade_out_ani);
+    out_group->addAnimation(rotate_ani);
     connect(this, &SlidePage::sizeChange, slide_out_ani, [=](){
         slide_out_ani->setEndValue(QPoint(-this->width() - 30, 0));
     });
@@ -114,12 +126,17 @@ SlidePage::SlidePage(int radius, QString name, QWidget *parent)
     this->resize(parent->width() * 0.4 <= PREFER_WIDTH ? 
                  PREFER_WIDTH : parent->width() * 0.4, parent->height());
     this->move(QPoint(-this->width() - 30, 0));
+    m_page_content_container = new ScrollArea(this);
+    //> note: Important!!!
+    m_page_content_container->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     m_name_label = new QLabel(m_page_name, this);
     m_text_font.setStyleStrategy(QFont::PreferAntialias);
     m_name_label->setFont(m_text_font);
 
     m_opacity = new QGraphicsOpacityEffect(this);
     m_opacity->setOpacity(0);
+    m_page_content_container->setGraphicsEffect(m_opacity);
     m_name_label->setGraphicsEffect(m_opacity);
 
     QString style = "background-color:white;border-radius:" + 
@@ -137,6 +154,7 @@ SlidePage::SlidePage(int radius, QString name, QWidget *parent)
     QHBoxLayout* title_layout = new QHBoxLayout(title_bar);
     title_layout->setAlignment(Qt::AlignLeft);
     title_bar->setLayout(title_layout);
+    title_layout->addWidget(m_background_icon);
     title_layout->addWidget(m_name_label);
     main_layout->addWidget(title_bar);
     main_layout->setAlignment(Qt::AlignTop);
@@ -157,11 +175,17 @@ SlidePage::SlidePage(int radius, QString name, QWidget *parent)
     shadow->setColor(QColor(0, 0, 0));
     shadow->setOffset(0, 0);
     this->setGraphicsEffect(shadow);
+
     // set policies
     this->setFocusPolicy(Qt::ClickFocus);
     this->setMouseTracking(true);
     m_backgroud->setMouseTracking(true);
     m_slide_layer->setMouseTracking(true);
+
+    /* connect */
+    connect(m_background_icon, &QPushButton::clicked, this, [=](){
+        slideOut();
+    });
 }
 
 void SlidePage::setRadius(int radius)
@@ -182,25 +206,40 @@ void SlidePage::setName(QString name)
 void SlidePage::addContent(QWidget* widget)
 {
     widget->setParent(this);
+    m_page_content_container->addWidget(widget, false);
 }
 
 void SlidePage::addContents(QVector<QWidget*> widgets)
 {
+    m_page_content_container->addWidgets(widgets);
 }
 
 void SlidePage::removeContents(QVector<QWidget*> widgets)
 {
+    for(int i = 0; i < widgets.size(); i++) {
+        m_page_content_container->removeWidget(widgets[i]);
+    }
 }
 
-void SlidePage::updateContents(){
+void SlidePage::updateContents()
+{
+    m_page_content_container->updateHeight();
 }
 
-void SlidePage::scrollToTop(){
+void SlidePage::scrollToTop()
+{
+    m_page_content_container->scrollToTop();
 }
 
 void SlidePage::resizeEvent(QResizeEvent *event)
 {
-    
+    m_backgroud->resize(this->size());
+    m_slide_layer->resize(this->parentWidget()->size());
+    if(!m_on_shown && !m_cur_ani) {
+        this->move(QPoint(-this->width() - 30, 0));
+    }else if (!m_on_shown && m_cur_ani) {
+        emit sizeChange();
+    }
 }
 
 } // localminmax::gui

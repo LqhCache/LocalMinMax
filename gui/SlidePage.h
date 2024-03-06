@@ -20,6 +20,8 @@
 #include <QtCore/QSequentialAnimationGroup>
 
 #include "common/Math.h"
+#include "gui/ScrollContainer.h"
+#include "gui/GuiWidgets.h"
 
 namespace localminmax::gui {
 constexpr int32_t PREFER_WIDTH = 350;
@@ -66,13 +68,15 @@ public:
 private:
     void resizeEvent(QResizeEvent *event);
 
-    int m_corner_radius;
+    int32_t m_corner_radius;
     bool m_on_shown = false;
+    QFont m_text_font = QFont("Corbel Light", 24);
     QString m_page_name = nullptr;
+    GuiIcon* m_background_icon = nullptr;
+    ScrollArea* m_page_content_container = nullptr;
     QLabel* m_name_label = nullptr;
     QWidget* m_backgroud = nullptr;
     SlideLayer* m_slide_layer = nullptr;
-    QFont m_text_font = QFont("Corbel Light", 24);
     QParallelAnimationGroup* m_cur_ani = nullptr;
     QGraphicsOpacityEffect* m_opacity = nullptr;
 };

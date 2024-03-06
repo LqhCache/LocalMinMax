@@ -16,6 +16,7 @@
 #include <QtCore/QVector>
 
 #include "common/Math.h"
+#include "gui/SlidePage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { 
@@ -57,7 +58,16 @@ private:
 
     QLineEdit* m_canvas_title = nullptr;
     QLineEdit* m_canvas_desc = nullptr;
+    GuiIcon* m_settings_icon = nullptr;
+    GuiIcon* m_layers_icon = nullptr;
     QWidget* m_canvas_display = nullptr;
+
+    QVector<SlidePage*> m_page_list;
+    SlidePage* m_create_new_page = nullptr;
+    SlidePage* m_default_settings_page = nullptr;
+    SlidePage* m_cur_settings_page = nullptr;
+    SlidePage* m_layers_page = nullptr;
+    GuiSingleSelectGroup* m_layer_select = nullptr;
 
     bool m_maximized = false;
     bool m_mouse_pressed = false;
